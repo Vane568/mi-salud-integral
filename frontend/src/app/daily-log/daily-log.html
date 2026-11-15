@@ -1,0 +1,127 @@
+<section class="card form-page">
+  <p class="eyebrow">SEGUIMIENTO COTIDIANO</p>
+  <h1>Registrar mi día</h1>
+  <p class="muted">No hace falta completar todo. Cargá lo que quieras registrar.</p>
+
+  @if (error()) {
+    <div class="notice error">{{ error() }}</div>
+  }
+
+  <form (ngSubmit)="save()">
+    <label>
+      Fecha
+      <input type="date" name="logDate" [(ngModel)]="logDate" required />
+    </label>
+
+    <h2>Alimentación diaria</h2>
+    <p class="muted">Agregá cada alimento con su cantidad y unidad de medida.</p>
+
+    @for (meal of mealTypes; track meal) {
+      <section class="meal-card">
+        <h3>{{ mealLabels[meal] }}</h3>
+
+        @for (item of foods[meal]; track $index) {
+          <div class="food-row">
+            <div class="two">
+              <label>
+                Alimento
+                <input
+                  type="text"
+                  [(ngModel)]="item.foodName"
+                  [name]="'foodName_' + meal + '_' + $index"
+                  maxlength="150"
+                  placeholder="Ej. Pollo, arroz, banana"
+                  required
+                />
+              </label>
+              <label>
+                Cantidad
+                <input
+                  type="number"
+                  [(ngModel)]="item.quantity"
+                  [name]="'quantity_' + meal + '_' + $index"
+                  min="0.01"
+                  step="0.01"
+                  placeholder="Ej. 150"
+                  required
+                />
+              </label>
+            </div>
+            <label>
+              Unidad
+              <select [(ngModel)]="item.unit" [name]="'unit_' + meal + '_' + $index" required>
+                @for (unit of units; track unit.value) {
+                  <option [value]="unit.value">{{ unit.label }}</option>
+                }
+              </select>
+            </label>
+            <button type="button" class="secondary" (click)="removeFood(meal, $index)">
+              Eliminar alimento
+            </button>
+          </div>
+        }
+
+        <button type="button" class="secondary" (click)="addFood(meal)">
+          + Agregar alimento
+        </button>
+      </section>
+    }
+
+    <h2>Hidratación y descanso</h2>
+    <div class="two">
+      <label>
+        Agua (litros)
+        <input
+          type="number"
+          name="waterLiters"
+          [(ngModel)]="waterLiters"
+          min="0"
+          max="20"
+          step="0.1"
+          placeholder="Ej. 1.8"
+        />
+      </label>
+      <label>
+        Horas de sueño
+        <input
+          type="number"
+          name="sleepHours"
+          [(ngModel)]="sleepHours"
+          min="0"
+          max="24"
+          step="0.25"
+          placeholder="Ej. 7.5"
+        />
+      </label>
+    </div>
+
+    <h2>Actividad y bienestar</h2>
+    <label>
+      Actividad física
+      <textarea
+        name="activity"
+        rows="2"
+        [(ngModel)]="activity"
+        placeholder="Caminata, natación, gimnasio..."
+      ></textarea>
+    </label>
+    <label>
+      ¿Cómo estuvo tu ánimo?
+      <select name="mood" [(ngModel)]="mood">
+        <option value="">Seleccionar</option>
+        @for (option of moods; track option) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </label>
+    <label>
+      Síntomas o molestias
+      <textarea name="symptoms" rows="3" [(ngModel)]="symptoms"></textarea>
+    </label>
+
+    <div class="actions">
+      <button class="primary" type="submit">Guardar registro</button>
+      <a class="secondary" routerLink="/inicio">Cancelar</a>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.meal-card {
+  background: #fafcfb;
+  border: 1px solid #dce7e1;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.food-row {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e5eee9;
+}

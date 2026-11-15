@@ -1,0 +1,70 @@
+<div class="welcome">
+  <div>
+    <p class="eyebrow">TU RESUMEN PERSONAL</p>
+    <h1>Hola, {{ user()?.name }}</h1>
+    <p class="muted">Un paso a la vez. Registrar tus hábitos ayuda a conocer tu evolución.</p>
+  </div>
+  <a class="primary button-link" routerLink="/registro-diario">＋ Registrar mi día</a>
+</div>
+
+<div class="grid">
+  <a class="feature card" routerLink="/mi-perfil">
+    <h2>Mi perfil de salud</h2>
+    <p>Objetivos, patologías, síntomas, medicamentos y alergias.</p>
+    <b>Completar perfil →</b>
+  </a>
+  <a class="feature card" routerLink="/registro-diario">
+    <h2>Registro diario</h2>
+    <p>Alimentación, hidratación, actividad, sueño y estado de ánimo.</p>
+    <b>Cargar información →</b>
+  </a>
+  <div class="feature card muted">
+    <h2>Mi evolución</h2>
+    <p>Los informes y gráficos semanales serán la próxima etapa.</p>
+    <small>Próximamente</small>
+  </div>
+  <div class="feature card muted">
+    <h2>Asistente inteligente</h2>
+    <p>Análisis personalizado basado en tus registros y fuentes confiables.</p>
+    <small>Próximamente</small>
+  </div>
+</div>
+
+<section class="card">
+  <h2>Mis últimos registros</h2>
+
+  @if (recentLogs().length) {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            @for (meal of mealTypes; track meal) {
+              <th>{{ mealLabels[meal] }}</th>
+            }
+            <th>Agua</th>
+            <th>Sueño</th>
+            <th>Ánimo</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (log of recentLogs(); track log.id) {
+            <tr>
+              <td>{{ formatDate(log.logDate) }}</td>
+              @for (meal of mealTypes; track meal) {
+                <td>{{ formatFoods(log.id, meal) }}</td>
+              }
+              <td>{{ log.waterLiters != null ? log.waterLiters + ' L' : '—' }}</td>
+              <td>{{ log.sleepHours != null ? log.sleepHours + ' h' : '—' }}</td>
+              <td>{{ log.mood || '—' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <p class="empty">
+      Todavía no cargaste registros. Cuando quieras, empezá por registrar tu día.
+    </p>
+  }
+</section>

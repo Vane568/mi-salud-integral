@@ -1,0 +1,24 @@
+<header class="topbar">
+  <a class="brand" routerLink="/">Mi Salud Integral</a>
+  @if (auth.isAuthenticated()) {
+    <nav>
+      <a routerLink="/inicio">Inicio</a>
+      <a routerLink="/mi-perfil">Mi perfil</a>
+      <a routerLink="/registro-diario">Registrar día</a>
+      <button type="button" class="link-button" (click)="logout()">Salir</button>
+    </nav>
+  } @else {
+    <nav>
+      <a routerLink="/ingresar">Ingresar</a>
+      <a routerLink="/registro" class="nav-cta">Crear cuenta</a>
+    </nav>
+  }
+</header>
+
+<main class="container">
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  Mi Salud Integral · Orientación para el autocuidado, no reemplaza la consulta profesional.
+</footer>

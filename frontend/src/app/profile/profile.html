@@ -1,0 +1,54 @@
+<section class="card form-page">
+  <p class="eyebrow">INFORMACIÓN PERSONAL</p>
+  <h1>Mi perfil de salud</h1>
+  <p class="muted">
+    Completá solo la información que quieras registrar. Podés actualizarla cuando sea necesario.
+  </p>
+
+  @if (notice()) {
+    <div class="notice error">{{ notice() }}</div>
+  }
+
+  <form (ngSubmit)="save()">
+    <label>
+      Fecha de nacimiento
+      <input type="date" name="birthDate" [(ngModel)]="birthDate" />
+    </label>
+    <label>
+      Objetivos de salud
+      <textarea name="healthGoals" rows="3" [(ngModel)]="healthGoals"></textarea>
+    </label>
+    <label>
+      Patologías diagnosticadas
+      <textarea
+        name="diagnosedConditions"
+        rows="3"
+        [(ngModel)]="diagnosedConditions"
+        placeholder="Indicá diagnósticos confirmados por profesionales."
+      ></textarea>
+    </label>
+    <label>
+      Síntomas habituales
+      <textarea name="symptoms" rows="3" [(ngModel)]="symptoms"></textarea>
+    </label>
+    <label>
+      Medicamentos y dosis indicadas
+      <textarea name="medications" rows="3" [(ngModel)]="medications"></textarea>
+    </label>
+    <label>
+      Alergias
+      <textarea name="allergies" rows="2" [(ngModel)]="allergies"></textarea>
+    </label>
+
+    <div class="actions">
+      <button class="primary" type="submit">Guardar perfil</button>
+      <a class="secondary" routerLink="/inicio">Volver</a>
+    </div>
+  </form>
+
+  <p class="privacy">
+    Esta versión guarda los datos en tu navegador para el deploy estático en Vercel. Antes de usar
+    datos médicos reales en un servidor público se reforzarán seguridad, copias de respaldo y
+    protección de datos.
+  </p>
+</section>

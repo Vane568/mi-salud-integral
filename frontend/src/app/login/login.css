@@ -1,0 +1,4 @@
+/* shared via global utility classes in styles.css */
+:host {
+  display: block;
+}

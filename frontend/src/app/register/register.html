@@ -1,0 +1,46 @@
+<section class="card auth">
+  <p class="eyebrow">UN ESPACIO PERSONAL Y PRIVADO</p>
+  <h1>Crear cuenta</h1>
+  <p class="muted">Cada persona tendrá su propio perfil y sus registros.</p>
+
+  @if (error()) {
+    <div class="notice error">{{ error() }}</div>
+  }
+
+  <form (ngSubmit)="submit()">
+    <label>
+      Nombre y apellido
+      <input name="name" [(ngModel)]="name" maxlength="100" required autocomplete="name" />
+    </label>
+    <label>
+      Correo electrónico
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        maxlength="180"
+        required
+        autocomplete="email"
+      />
+    </label>
+    <label>
+      Contraseña (mínimo 10 caracteres)
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        minlength="10"
+        required
+        autocomplete="new-password"
+      />
+    </label>
+    <button class="primary" type="submit" [disabled]="loading()">
+      {{ loading() ? 'Creando…' : 'Crear mi cuenta' }}
+    </button>
+  </form>
+
+  <p class="footer-link">
+    ¿Ya tenés cuenta?
+    <a routerLink="/ingresar">Ingresar</a>
+  </p>
+</section>
