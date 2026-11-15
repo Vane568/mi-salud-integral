@@ -1,0 +1,75 @@
+{% extends 'base.html' %}{% block title %}Inicio · Mi Salud Integral{% endblock %}{% block content %}
+<div class="welcome"><div><p class="eyebrow">TU RESUMEN PERSONAL</p><h1>Hola, {{ current_user.name }} 👋</h1><p>Un paso a la vez. Registrar tus hábitos ayuda a conocer tu evolución.</p></div><a class="primary button-link" href="{{ url_for('daily_log') }}">＋ Registrar mi día</a></div>
+<div class="grid"><a class="feature card" href="{{ url_for('profile') }}"><span>🩺</span><h2>Mi perfil de salud</h2><p>Objetivos, patologías, síntomas, medicamentos y alergias.</p><b>Completar perfil →</b></a><a class="feature card" href="{{ url_for('daily_log') }}"><span>📋</span><h2>Registro diario</h2><p>Alimentación, hidratación, actividad, sueño y estado de ánimo.</p><b>Cargar información →</b></a><div class="feature card muted"><span>📈</span><h2>Mi evolución</h2><p>Los informes y gráficos semanales serán la próxima etapa.</p><small>Próximamente</small></div><div class="feature card muted"><span>✨</span><h2>Asistente inteligente</h2><p>Análisis personalizado basado en tus registros y fuentes confiables.</p><small>Próximamente</small></div></div>
+
+<section class="card">
+    <h2>Mis últimos registros</h2>
+
+    {% if recent_logs %}
+  
+<div class="table-wrap">
+    <table>
+        <tr>
+            <th>Fecha</th>
+            <th>Desayuno</th>
+            <th>Almuerzo</th>
+            <th>Merienda</th>
+            <th>Cena</th>
+            <th>Colaciones</th>
+            <th>Agua</th>
+            <th>Sueño</th>
+            <th>Ánimo</th>
+        </tr>
+
+        {% for log in recent_logs %}
+        <tr>
+            <td>{{ log.log_date.strftime('%d/%m/%Y') }}</td>
+
+            {% for tipo, anterior in [
+                ('breakfast', log.breakfast),
+                ('lunch', log.lunch),
+                ('snack', log.snack),
+                ('dinner', log.dinner),
+                ('snacks', log.snacks)
+            ] %}
+            <td>
+                {% set alimentos = log.alimentos
+                    | selectattr('meal_type', 'equalto', tipo)
+                    | list %}
+
+                {% if alimentos %}
+                    {% for alimento in alimentos %}
+                        <div>
+                            {{ alimento.food_name }}:
+                            {{ '%g' | format(alimento.quantity | float) }}
+                            {{ alimento.unit }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {{ anterior or '—' }}
+                {% endif %}
+            </td>
+            {% endfor %}
+
+            <td>
+                {{ log.water_liters if log.water_liters is not none else '—' }} L
+            </td>
+
+            <td>
+                {{ log.sleep_hours if log.sleep_hours is not none else '—' }} h
+            </td>
+
+            <td>{{ log.mood or '—' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+    {% else %}
+    <p class="empty">
+        Todavía no cargaste registros. Cuando quieras, empezá por registrar tu día.
+    </p>
+    {% endif %}
+</section>
+{% endblock %}

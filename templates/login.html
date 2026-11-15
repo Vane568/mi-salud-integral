@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Ingresar · Mi Salud Integral{% endblock %}{% block content %}
+<section class="auth card"><p class="eyebrow">TU BIENESTAR, A TU ALCANCE</p><h1>Bienvenida/o</h1><p>Ingresá a tu espacio personal de salud.</p>
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña<input type="password" name="password" required autocomplete="current-password"></label><button class="primary">Ingresar</button></form>
+<p>¿Todavía no tenés cuenta? <a href="{{ url_for('register') }}">Crear una cuenta</a></p></section>{% endblock %}

@@ -1,0 +1,146 @@
+
+{% extends 'base.html' %}
+{% block title %}Registro diario · Mi Salud Integral{% endblock %}
+
+{% block content %}
+<section class="form-page card">
+
+    <p class="eyebrow">SEGUIMIENTO COTIDIANO</p>
+    <h1>Registrar mi día</h1>
+    <p>No hace falta completar todo. Cargá lo que quieras registrar.</p>
+
+    <form method="post" id="daily-log-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label>Fecha
+            <input type="date" name="log_date" value="{{ today }}" required>
+        </label>
+
+        <h2>🍳 Alimentación diaria</h2>
+        <p>Agregá cada alimento con su cantidad y unidad de medida.</p>
+
+        {% set comidas = [
+            ('breakfast', 'Desayuno'),
+            ('lunch', 'Almuerzo'),
+            ('snack', 'Merienda'),
+            ('dinner', 'Cena'),
+            ('snacks', 'Colaciones')
+        ] %}
+
+        {% for codigo, nombre in comidas %}
+        <section class="card" style="margin-bottom: 20px;">
+            <h3>{{ nombre }}</h3>
+
+            <div id="alimentos-{{ codigo }}"></div>
+
+            <button type="button"
+                    class="secondary"
+                    onclick="agregarAlimento('{{ codigo }}')">
+                + Agregar alimento
+            </button>
+        </section>
+        {% endfor %}
+
+        <h2>💧 Hidratación y descanso</h2>
+
+        <div class="two">
+            <label>Agua (litros)
+                <input type="number" name="water_liters"
+                       min="0" max="20" step="0.1"
+                       placeholder="Ej. 1.8">
+            </label>
+
+            <label>Horas de sueño
+                <input type="number" name="sleep_hours"
+                       min="0" max="24" step="0.25"
+                       placeholder="Ej. 7.5">
+            </label>
+        </div>
+
+        <h2>🏃 Actividad y bienestar</h2>
+
+        <label>Actividad física
+            <textarea name="activity" rows="2"
+                      placeholder="Caminata, natación, gimnasio..."></textarea>
+        </label>
+
+        <label>¿Cómo estuvo tu ánimo?
+            <select name="mood">
+                <option value="">Seleccionar</option>
+                <option>Muy bien</option>
+                <option>Bien</option>
+                <option>Regular</option>
+                <option>Mal</option>
+                <option>Muy mal</option>
+            </select>
+        </label>
+
+        <label>Síntomas o molestias
+            <textarea name="symptoms" rows="3"></textarea>
+        </label>
+
+        <div class="actions">
+            <button type="submit" class="primary">
+                Guardar registro
+            </button>
+
+            <a class="secondary" href="{{ url_for('dashboard') }}">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</section>
+
+<script>
+function agregarAlimento(comida) {
+    const contenedor = document.getElementById(
+        "alimentos-" + comida
+    );
+
+    const fila = document.createElement("div");
+    fila.className = "fila-alimento";
+    fila.style.marginBottom = "12px";
+
+    fila.innerHTML = `
+        <div class="two">
+            <label>Alimento
+                <input type="text"
+                       name="food_name_${comida}[]"
+                       maxlength="150"
+                       placeholder="Ej. Pollo, arroz, banana"
+                       required>
+            </label>
+
+            <label>Cantidad
+                <input type="number"
+                       name="quantity_${comida}[]"
+                       min="0.01"
+                       step="0.01"
+                       placeholder="Ej. 150"
+                       required>
+            </label>
+        </div>
+
+        <label>Unidad
+            <select name="unit_${comida}[]" required>
+                <option value="g">Gramos (g)</option>
+                <option value="ml">Mililitros (ml)</option>
+                <option value="unidad">Unidad</option>
+                <option value="cucharada">Cucharada</option>
+                <option value="cucharadita">Cucharadita</option>
+                <option value="taza">Taza</option>
+            </select>
+        </label>
+
+        <button type="button"
+                class="secondary"
+                onclick="this.closest('.fila-alimento').remove()">
+            Eliminar alimento
+        </button>
+    `;
+
+    contenedor.appendChild(fila);
+}
+</script>
+
+{% endblock %}

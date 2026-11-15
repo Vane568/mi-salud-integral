@@ -1,0 +1,53 @@
+# Python / Flask
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Bases locales (SQLite) — la fuente de verdad pasa a Supabase/Postgres
+*.db
+*.db-journal
+instance/*.db
+instance/*.db-journal
+
+# Respaldos locales
+*.bak
+respaldo_*/
+
+# Node / Angular
+node_modules/
+dist/
+.tmp/
+.angular/
+coverage/
+*.log
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# IDEs / SO
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Vercel / tooling local
+.vercel/
+
+# Scripts temporales de inspección
+# (se versiona _inspect_db.py a propósito para la migración)
