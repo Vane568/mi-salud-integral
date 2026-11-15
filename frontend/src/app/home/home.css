@@ -27,11 +27,12 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url('/assets/corredora-deporte.jpg');
+  /* Ruta relativa para que el bundler de Angular resuelva el asset en producción */
+  background-image: url('../../assets/corredora-deporte.jpg');
   background-size: cover;
   background-position: center 30%;
   background-repeat: no-repeat;
-  opacity: 0.28;
+  opacity: 0.38;
   filter: saturate(0.85) contrast(0.95);
   -webkit-mask-image: linear-gradient(
     180deg,
@@ -59,17 +60,17 @@
   background:
     linear-gradient(
       115deg,
-      rgba(247, 251, 248, 0.92) 0%,
-      rgba(247, 251, 248, 0.72) 38%,
-      rgba(232, 242, 236, 0.45) 62%,
-      rgba(247, 251, 248, 0.78) 100%
+      rgba(247, 251, 248, 0.78) 0%,
+      rgba(247, 251, 248, 0.45) 42%,
+      rgba(232, 242, 236, 0.25) 68%,
+      rgba(247, 251, 248, 0.55) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(247, 251, 248, 0.55) 0%,
-      transparent 35%,
-      transparent 70%,
-      rgba(228, 239, 232, 0.7) 100%
+      rgba(247, 251, 248, 0.4) 0%,
+      transparent 32%,
+      transparent 72%,
+      rgba(228, 239, 232, 0.5) 100%
     );
 }
 
